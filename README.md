@@ -1,79 +1,78 @@
-# patient-api
+# Patient Application
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework.
+# Running the Patient Application
 
-If you want to learn more about Quarkus, please visit its website: <https://quarkus.io/>.
+## Instructions
 
-## Running the application in dev mode
+### Pull and Run the Docker Image
 
-You can run your application in dev mode that enables live coding using:
+To ensure you are running the latest version of the Docker image, follow these steps:
+  Pull the image from Docker hub with this command:
+  
+        docker pull bilelneb/patient-app:latest
+  Run the image:
+  
+        docker run -p 8080:8080 bilelneb/patient-app:latest
+### Verify the Application is Running
+Open a web browser and navigate to:
 
-```shell script
-./mvnw compile quarkus:dev
-```
+      http://localhost:8080
 
-> **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at <http://localhost:8080/q/dev/>.
+## API Endpoints
 
-## Packaging and running the application
+The Patient API provides the following endpoints:
 
-The application can be packaged using:
+### Get All Patients
 
-```shell script
-./mvnw package
-```
+- **URL**: `/api/patients`
+- **Method**: `GET`
+- **Description**: Retrieves a list of all patients.
+- **Response**:
+  - `200 OK`: A list of patients.
 
-It produces the `quarkus-run.jar` file in the `target/quarkus-app/` directory.
-Be aware that it’s not an _über-jar_ as the dependencies are copied into the `target/quarkus-app/lib/` directory.
+### Create a New Patient
 
-The application is now runnable using `java -jar target/quarkus-app/quarkus-run.jar`.
+- **URL**: `/api/patients`
+- **Method**: `POST`
+- **Description**: Creates a new patient.
+- **Request Body**:
+  - `firstName` (string): The patient's first name.
+  - `lastName` (string): The patient's last name.
+- **Response**:
+  - `201 Created`: The created patient.
 
-If you want to build an _über-jar_, execute the following command:
+### Get Patient by ID
 
-```shell script
-./mvnw package -Dquarkus.package.jar.type=uber-jar
-```
+- **URL**: `/api/patients/{id}`
+- **Method**: `GET`
+- **Description**: Retrieves a patient by ID.
+- **Path Parameters**:
+  - `id` (integer): The patient ID.
+- **Response**:
+  - `200 OK`: The patient with the specified ID.
+  - `404 Not Found`: Patient not found.
 
-The application, packaged as an _über-jar_, is now runnable using `java -jar target/*-runner.jar`.
+### Update Patient by ID
 
-## Creating a native executable
+- **URL**: `/api/patients/{id}`
+- **Method**: `PUT`
+- **Description**: Updates a patient by ID.
+- **Path Parameters**:
+  - `id` (integer): The patient ID.
+- **Request Body**:
+  - `firstName` (string): The patient's first name.
+  - `lastName` (string): The patient's last name.
+- **Response**:
+  - `200 OK`: The updated patient.
+  - `404 Not Found`: Patient not found.
 
-You can create a native executable using:
+### Delete Patient by ID
 
-```shell script
-./mvnw package -Dnative
-```
-
-Or, if you don't have GraalVM installed, you can run the native executable build in a container using:
-
-```shell script
-./mvnw package -Dnative -Dquarkus.native.container-build=true
-```
-
-You can then execute your native executable with: `./target/patient-api-1.0-SNAPSHOT-runner`
-
-If you want to learn more about building native executables, please consult <https://quarkus.io/guides/maven-tooling>.
-
-## Related Guides
-
-- REST ([guide](https://quarkus.io/guides/rest)): A Jakarta REST implementation utilizing build time processing and
-  Vert.x. This extension is not compatible with the quarkus-resteasy extension, or any of the extensions that depend on
-  it.
-- JDBC Driver - H2 ([guide](https://quarkus.io/guides/datasource)): Connect to the H2 database via JDBC
-- Hibernate ORM with Panache ([guide](https://quarkus.io/guides/hibernate-orm-panache)): Simplify your persistence code
-  for Hibernate ORM via the active record or the repository pattern
-
-## Provided Code
-
-### Hibernate ORM
-
-Create your first JPA entity
-
-[Related guide section...](https://quarkus.io/guides/hibernate-orm)
-
-[Related Hibernate with Panache section...](https://quarkus.io/guides/hibernate-orm-panache)
-
-### REST
-
-Easily start your REST Web Services
-
-[Related guide section...](https://quarkus.io/guides/getting-started-reactive#reactive-jax-rs-resources)
+- **URL**: `/api/patients/{id}`
+- **Method**: `DELETE`
+- **Description**: Deletes a patient by ID.
+- **Path Parameters**:
+  - `id` (integer): The patient ID.
+- **Response**:
+  - `204 No Content`: Patient deleted.
+  - `404 Not Found`: Patient not found.
